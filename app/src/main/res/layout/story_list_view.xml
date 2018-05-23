@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/story_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="The Title Of The Story"
+        android:fontFamily="serif"
+        android:textSize="20sp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"/>
+
+    <TextView
+        android:id="@+id/story_section"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="category"
+        android:textAllCaps="true"
+        android:background="@color/colorDarkerPaleBeige"
+        android:layout_below="@id/story_title"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/story_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="date"
+        android:fontFamily="serif"
+        android:textAllCaps="true"
+        android:paddingRight="8dp"
+        android:layout_below="@id/story_section"
+        android:layout_toLeftOf="@id/story_contributor"/>
+
+    <TextView
+        android:id="@+id/story_contributor"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Author's Name"
+        android:fontFamily="serif"
+        android:textAllCaps="true"
+        android:layout_below="@id/story_section"
+        android:layout_alignParentRight="true"/>
+
+    <TextView
+        android:id="@+id/story_summary"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="A very long piece of text"
+        android:layout_below="@id/story_contributor"
+        android:maxLines="3"
+        android:layout_alignParentLeft="true"
+        android:layout_marginBottom="4dp"/>
+
+
+</RelativeLayout>
