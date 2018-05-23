@@ -18,6 +18,8 @@ import java.util.List;
 
 public class StoryAdaptor extends ArrayAdapter<Story> {
 
+    private static final String DATE_SEPARATOR = "T";
+
     public StoryAdaptor(Context context, List<Story> stories) {
         super(context, 0, stories);
     }
@@ -42,7 +44,10 @@ public class StoryAdaptor extends ArrayAdapter<Story> {
         author.setText(currentStory.getmAuthor());
 
         TextView date = (TextView) listItemView.findViewById(R.id.story_date);
-        date.setText(currentStory.getmDate());
+        String fullDateTime = currentStory.getmDate();
+        String[] parts = fullDateTime.split(DATE_SEPARATOR);
+        String dateUsed = parts[0];
+        date.setText(dateUsed);
 
         TextView summary = (TextView) listItemView.findViewById(R.id.story_summary);
         summary.setText(currentStory.getmSummary());

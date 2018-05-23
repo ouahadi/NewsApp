@@ -26,7 +26,7 @@ public final class StoriesQueryUtils {
 
 
     public static final String LOG_TAG = StoriesQueryUtils.class.getSimpleName();
-    private static String author;
+
 
     private StoriesQueryUtils() {
     }
@@ -123,6 +123,7 @@ public final class StoriesQueryUtils {
     }
 
     private static List<Story> extractFeatureFromJson(String storiesJSON){
+
         if(TextUtils.isEmpty(storiesJSON)){
             return null;
         }
@@ -143,12 +144,15 @@ public final class StoriesQueryUtils {
                 String section = currentStory.getString("sectionName");
                 String date = currentStory.getString("webPublicationDate");
                 String link = currentStory.getString("webUrl");
+                String author = " ";
 
                 JSONArray tagsArray = currentStory.getJSONArray("tags");
-                for (int ii = 0; ii < tagsArray.length(); ii++) {
+                if (tagsArray != null) {
+                    for (int ii = 0; ii < tagsArray.length(); ii++) {
 
-                    JSONObject authorJson = tagsArray.getJSONObject(ii);
-                    author = authorJson.getString("webTitle");
+                        JSONObject authorJson = tagsArray.getJSONObject(ii);
+                        author = authorJson.getString("webTitle");
+                    }
                 }
                         JSONObject blocks = currentStory.getJSONObject("blocks");
                         JSONArray body = blocks.getJSONArray("body");

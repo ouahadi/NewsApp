@@ -52,7 +52,7 @@
         android:layout_below="@id/story_contributor"
         android:maxLines="3"
         android:layout_alignParentLeft="true"
-        android:layout_marginBottom="4dp"/>
+        android:layout_marginBottom="8dp"/>
 
 
 </RelativeLayout>
