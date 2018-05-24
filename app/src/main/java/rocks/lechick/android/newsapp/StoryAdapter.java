@@ -16,11 +16,11 @@ import java.util.List;
  * Created by alek on 21/05/2018.
  */
 
-public class StoryAdaptor extends ArrayAdapter<Story> {
+public class StoryAdapter extends ArrayAdapter<Story> {
 
     private static final String DATE_SEPARATOR = "T";
 
-    public StoryAdaptor(Context context, List<Story> stories) {
+    public StoryAdapter(Context context, List<Story> stories) {
         super(context, 0, stories);
     }
 
@@ -29,28 +29,28 @@ public class StoryAdaptor extends ArrayAdapter<Story> {
         View listItemView = convertView;
         if (listItemView == null) {
             listItemView = LayoutInflater.from(getContext()).inflate(
-                    R.layout.story_list_view, parent, false);
+                    R.layout.story_list_item, parent, false);
         }
 
         Story currentStory = getItem(position);
 
-        TextView title = (TextView) listItemView.findViewById(R.id.story_title);
-        title.setText(currentStory.getmTitle());
+        TextView titleTextView = (TextView) listItemView.findViewById(R.id.story_title);
+        titleTextView.setText(currentStory.getmTitle());
 
-        TextView section = (TextView) listItemView.findViewById(R.id.story_section);
-        section.setText(currentStory.getmSection());
+        TextView sectionTextView = (TextView) listItemView.findViewById(R.id.story_section);
+        sectionTextView.setText(currentStory.getmSection());
 
-        TextView author = (TextView) listItemView.findViewById(R.id.story_contributor);
-        author.setText(currentStory.getmAuthor());
+        TextView authorTextView = (TextView) listItemView.findViewById(R.id.story_contributor);
+        authorTextView.setText(currentStory.getmAuthor());
 
-        TextView date = (TextView) listItemView.findViewById(R.id.story_date);
+        TextView dateTextView = (TextView) listItemView.findViewById(R.id.story_date);
         String fullDateTime = currentStory.getmDate();
         String[] parts = fullDateTime.split(DATE_SEPARATOR);
         String dateUsed = parts[0];
-        date.setText(dateUsed);
+        dateTextView.setText(dateUsed);
 
-        TextView summary = (TextView) listItemView.findViewById(R.id.story_summary);
-        summary.setText(currentStory.getmSummary());
+        TextView summaryTextView = (TextView) listItemView.findViewById(R.id.story_summary);
+        summaryTextView.setText(currentStory.getmSummary());
 
         return listItemView;
 

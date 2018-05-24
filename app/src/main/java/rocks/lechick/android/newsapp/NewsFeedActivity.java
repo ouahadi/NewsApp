@@ -1,7 +1,6 @@
 package rocks.lechick.android.newsapp;
 
 import android.app.LoaderManager;
-import android.app.LoaderManager.LoaderCallbacks;
 import android.content.Context;
 import android.content.Loader;
 
@@ -19,12 +18,12 @@ import android.widget.TextView;
 import java.util.ArrayList;
 import java.util.List;
 
-public class MainNewsFeed extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Story>>{
+public class NewsFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Story>>{
 
-    private static final String LOG_TAG = MainNewsFeed.class.getName();
+    private static final String LOG_TAG = NewsFeedActivity.class.getName();
     private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/artanddesign?show-blocks=body&show-tags=contributor&api-key=2b89f3b3-84d7-4af3-bbbd-d71d7b47cb66";
     private static final int STORY_LOADER_ID = 1;
-    private StoryAdaptor mAdapter;
+    private StoryAdapter mAdapter;
     private TextView mEmptyStateTextView;
 
     @Override
@@ -36,7 +35,7 @@ public class MainNewsFeed extends AppCompatActivity implements LoaderManager.Loa
         mEmptyStateTextView = (TextView) findViewById(R.id.empty_view);
         storiesListView.setEmptyView(mEmptyStateTextView);
 
-        mAdapter = new StoryAdaptor(this, new ArrayList<Story>());
+        mAdapter = new StoryAdapter(this, new ArrayList<Story>());
 
         storiesListView.setAdapter(mAdapter);
 
@@ -74,7 +73,7 @@ public class MainNewsFeed extends AppCompatActivity implements LoaderManager.Loa
             loadingIndicator.setVisibility(View.GONE);
 
             // Update empty state with no connection error message
-            mEmptyStateTextView.setText(R.string.no_internet_connection);
+            mEmptyStateTextView.setText(R.string.no_stories);
         }
     }
 
