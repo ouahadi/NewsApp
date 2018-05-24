@@ -73,7 +73,7 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
             loadingIndicator.setVisibility(View.GONE);
 
             // Update empty state with no connection error message
-            mEmptyStateTextView.setText(R.string.no_stories);
+            mEmptyStateTextView.setText(R.string.no_internet_connection);
         }
     }
 
@@ -87,7 +87,7 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
         View loadingIndicator = findViewById(R.id.empty_progress_bar);
         loadingIndicator.setVisibility(View.GONE);
         // Update empty state with no connection error message
-        mEmptyStateTextView.setText(R.string.no_internet_connection);
+        mEmptyStateTextView.setText(R.string.no_stories);
 
         if (stories != null && !stories.isEmpty()) {
             mAdapter.addAll(stories);
