@@ -5,11 +5,16 @@ import android.content.Context;
 import android.content.Loader;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
@@ -21,7 +26,7 @@ import java.util.List;
 public class NewsFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<List<Story>>{
 
     private static final String LOG_TAG = NewsFeedActivity.class.getName();
-    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/artanddesign?show-blocks=body&show-tags=contributor&api-key=2b89f3b3-84d7-4af3-bbbd-d71d7b47cb66";
+    private static final String GUARDIAN_REQUEST_URL = "https://content.guardianapis.com/";
     private static final int STORY_LOADER_ID = 1;
     private StoryAdapter mAdapter;
     private TextView mEmptyStateTextView;
@@ -73,13 +78,30 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
             loadingIndicator.setVisibility(View.GONE);
 
             // Update empty state with no connection error message
-            mEmptyStateTextView.setText(R.string.no_internet_connection);
+            mEmptyStateTextView.setText(R.string.no_stories);
         }
     }
 
     @Override
     public Loader<List<Story>> onCreateLoader(int i, Bundle Bundle){
-        return new StoriesLoader(this, GUARDIAN_REQUEST_URL);
+        SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(this);
+
+        String newsCategoryNumber = sharedPrefs.getString("selected_news_category", "0");
+        int categoryNumber = Integer.parseInt(newsCategoryNumber);
+        String newsCategory = getResources().getStringArray(R.array.storyCategoriesArray)[categoryNumber];
+
+        Uri baseUri = Uri.parse(GUARDIAN_REQUEST_URL);
+
+        Uri.Builder uriBuilder = baseUri.buildUpon();
+
+        uriBuilder.appendPath(newsCategory.toLowerCase());
+        uriBuilder.appendQueryParameter("show-blocks", "body");
+        uriBuilder.appendQueryParameter("show-tags", "contributor");
+        uriBuilder.appendQueryParameter("api-key", "2b89f3b3-84d7-4af3-bbbd-d71d7b47cb66");
+
+        Log.v("The uri I've built", uriBuilder.toString());
+
+        return new StoriesLoader(this, uriBuilder.toString());
     }
 
     @Override
@@ -87,7 +109,7 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
         View loadingIndicator = findViewById(R.id.empty_progress_bar);
         loadingIndicator.setVisibility(View.GONE);
         // Update empty state with no connection error message
-        mEmptyStateTextView.setText(R.string.no_stories);
+        mEmptyStateTextView.setText(R.string.no_internet_connection);
 
         if (stories != null && !stories.isEmpty()) {
             mAdapter.addAll(stories);
@@ -97,6 +119,23 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoaderReset(Loader<List<Story>> loader){
         mAdapter.clear();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.stories_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if (id == R.id.action_settings) {
+            Intent settingsIntent = new Intent(this, SettingsActivity.class);
+            startActivity(settingsIntent);
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 
 }
